@@ -20,7 +20,14 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'js/[name].[chunkhash].js',
-    chunkFilename: 'js/[name].[chunkhash].js'
+    chunkFilename: 'js/[name].[chunkhash].js',
+    publicPath: '/'
+  },
+  devServer: {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+    historyApiFallback: true,
   },
   module: {
     rules: [
