@@ -45,7 +45,6 @@ class App extends Component {
         <div>
           <Route exact path="/" component={Login}/>
           <Route path="/login" component={Login}/>
-          <PR path="/search/:primaryName" component={HomePage} />
           <PR path="/search" component={HomePage} />
         </div>
       </Router>

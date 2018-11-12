@@ -6,31 +6,16 @@ class HomePage extends Component {
     super(props);
     this.state = {
       search: "",
-      players: [
-        // {
-        //   id: 1,
-        //   name: { primaryName: "Messi", secondaryName: "Lionel" },
-        //   club: {
-        //     crestUrl:
-        //       "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg",
-        //     clubName: "FC Barcelona"
-        //   },
-        //   playerImgUrl:
-        //     "https://media-public.fcbarcelona.com/20157/0/document_thumbnail/20197/49/219/190/96394033/1.0-1/96394033.jpg?t=1534859847000",
-        //   position: "fr",
-        //   kitNumber: "10",
-        //   goals: 45,
-        //   playedGames: 54,
-        //   age: 31,
-        //   winner: true,
-        //   nationality: "argentina"
-        // }
-      ]
+      players: []
     };
-    this.list = null;
-    const {primaryName} = this.props.match.params;
-    axios
-      .get("http://localhost:5000/search/" + primaryName)
+  }
+
+
+  componentDidMount() {
+    let urlParams = new URLSearchParams(this.props.location.search);
+    if(urlParams.has("name") && urlParams.get("name") != "") {
+      axios
+      .get("http://localhost:5000/search/" + urlParams.get("name"))
       .then( res => {
         let { data } = res;
         this.setState ({
@@ -38,6 +23,7 @@ class HomePage extends Component {
         });
         console.log(data);
       });
+    }
   }
 
 

@@ -24,7 +24,7 @@ class Login extends Component {
         let { data } = res;
         if(data.success) { 
           localStorage.setItem("authToken",true); 
-          window.location.href = 'home';
+          window.location.href = 'search';
         }
         else alert(data.error);
       });
