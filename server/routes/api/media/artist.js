@@ -1,14 +1,15 @@
+
 const PageScraper = require('lib/PageScraper');
 const { request } = require('utils');
 const cheerio = require('cheerio');
+const axios = require('axios');
 
 const rq = (type, name, page) => {
-  console.log(1);
   if (page) {
-    return request(`https://mp3.zing.vn/nghe-si/${name}/${type}?&page=${page}`);
+    return request(`http://mp3.zing.vn/nghe-si/${name}/${type}?&page=${page}`);
   }
 
-  return request(`https://mp3.zing.vn/nghe-si/${name}/${type}`);
+  return request(`http://mp3.zing.vn/nghe-si/${name}/${type}`);
 };
 
 module.exports = function getArtist(req, res, next) {
@@ -35,11 +36,23 @@ module.exports = function getArtist(req, res, next) {
 const getSongs = (name, page, res, next) => {
   rq('bai-hat', name, page)
     .then(html => {
-      // view-source:https://mp3.zing.vn/nghe-si/Olly-Murs/bai-hat
+       // view-source:https://mp3.zing.vn/nghe-si/Olly-Murs/bai-hat
       // query: data-code
       // https://mp3.zing.vn/xhr/media/get-source?type=audio&key=data-code
       //  => mảng data
+      listData = [] // mảng data
       console.log(html);
+      let regexDataCode = /data-code="([\s\S]*?)"/g;
+      let listDataCode = html.toString().match(regexDataCode);
+      console.log(listDataCode);
+      for(let i = 0; i < listDataCode.length; i++){
+        axios.get('https://mp3.zing.vn/xhr/media/get-source?type=audio&key=' + listDataCode[i].toString().replace('data-code="', "").replace("", ""))
+        .then(response => {
+            console.log(response.data.data);
+            listData.push(response.data.data)
+        });
+      }
+      //////////////////////////////////
       const parser = new PageScraper(html);
       parser
         .extract('src', '.box-info-artist img', 'avatar')
