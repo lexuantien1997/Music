@@ -1,110 +1,82 @@
 const webpack = require('webpack');
 const path = require('path');
-
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-
+const CleanWebpack= require("clean-webpack-plugin")
 const VENDOR_LIBS = [
-  'react', 
-  'react-dom', 
+  'react', 'react-dom', 'redux', 'axios', 'prop-types', 'redux-thunk',
+  'react-router-redux', 'lodash.chunk', 'lodash.debounce', 'lodash.throttle',
+  'react-router', 'react-onclickoutside', 'react-input-range', 'react-toastify',
+  'react-circular-progressbar', 'react-addons-css-transition-group',
 ];
 
 module.exports = {
   entry: {
-    bundle: './src/index.js',
-  //  vendor: VENDOR_LIBS,
+    bundle: './app',
+    vendor: VENDOR_LIBS,
   },
   output: {
-    path: path.join(__dirname, 'public'),
-    filename: 'js/[name].[chunkhash].js',
-    chunkFilename: 'js/[name].[chunkhash].js',
-    publicPath: '/'
+    path: path.join(__dirname, '/public'),
+    filename: 'js/[name].js',
+    publicPath: '/',
   },
-  devServer: {
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-    },
-    historyApiFallback: true,
+  resolve: {
+    extensions: [
+      '.js', '.sass', '.json',
+    ],
+    modules: ['node_modules', 'app', 'seed'],
   },
   module: {
     rules: [
       {
-        test: /\.(sa|sc|c)ss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader',
-        ]
-      }, 
-      {
+        test: /\.(scss|sass)$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          // resolve-url-loader may be chained before sass-loader if necessary
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                minimize: true,
+              },
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                includePaths: ['./app/styles'],
+              },
+            },
+          ],
+        }),
+      }, {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules)/,
-        loader: 'babel-loader'
-      },
-      {
-        loader: 'file-loader',
-        test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.woff2$|\.eot$|\.ttf$|\.wav$|\.mp3$|\.ico$/
-      },
-      {
-        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-        loader: 'url-loader',
-      }
-    ],
-  },
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true // set to true if you want JS source maps
-      }),
-      new OptimizeCSSAssetsPlugin({})
-    ],
-		splitChunks: {
-			cacheGroups: {
-        common: {
-          name: 'common',
-          chunks: 'initial',
-          minChunks: 2,
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015', 'stage-0', 'react'],
         },
-				vendor: {
-          test: /node_modules/,
-          // name(module) {
-          //   // get the name. E.g. node_modules/packageName/not/this/part.js
-          //   // or node_modules/packageName
-          //   const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-
-          //   // npm package names are URL-safe, but some servers don't like @ symbols
-          //   return `npm.${packageName.replace('@', '')}`;
-          // },
-          name: "vendor",
-					priority: 10,
-          enforce: true,
-          chunks: "all"
-        }
-			}
-    },
-    runtimeChunk: {
-      name: 'manifest',
-    }
+      },
+    ],
   },
-  performance: {
-		maxEntrypointSize: 512000,
-		maxAssetSize: 384000,
-		hints: 'warning'
-	},
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: "css/[name].[hash].css",
-      chunkFilename: "css/[id].[hash].css"
+    new ExtractTextPlugin('css/style.css'),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+    }),
+    new webpack
+      .optimize
+      .UglifyJsPlugin({
+        compress: {
+          warnings: false,
+        },
+      }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"production"',
+      },
     }),
     new HtmlWebpackPlugin({
-      template: "./src/index.html"
-    }),
-    new CleanWebpackPlugin(["public"])
+      template: './app/index.html',
+    })
   ],
-  mode: "production"
 };
