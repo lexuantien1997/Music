@@ -40,7 +40,7 @@ const getSongs = (name, page, res, next) => {
       // query: data-code
       // https://mp3.zing.vn/xhr/media/get-source?type=audio&key=data-code
       //  => mảng data
-      listData = [] // mảng data
+      let listData = [] // mảng data
       console.log(html);
       let regexDataCode = /data-code="([\s\S]*?)"/g;
       let listDataCode = html.toString().match(regexDataCode);
