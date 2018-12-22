@@ -39,7 +39,7 @@ const getSongs = (name, page, res, next) => {
       // query: data-code
       // https://mp3.zing.vn/xhr/media/get-source?type=audio&key=data-code
       //  => mảng data
-      console.log(html);
+      // console.log(html);
       const parser = new PageScraper(html);
       parser
         .extract('src', '.box-info-artist img', 'avatar')
@@ -53,7 +53,8 @@ const getSongs = (name, page, res, next) => {
         })
         .extractAttr('text', '._trackLink span', 'artist_text')
         .paginate();
-      res.json(parser.get());
+        console.log(parser.get());
+     res.json(parser.get());
     })
     .catch(err => next(err));
 };
