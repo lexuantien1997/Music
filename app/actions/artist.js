@@ -56,7 +56,7 @@ export function fetchArtists(genre, id, page) {
       .catch(err => { dispatch(finishLoading()); throw err; });
   };
 }
-
+//  get artist
 export function fetchArtist(name, type = 'songs', page) {
   const pageQuery = page ? `?page=${page}` : '';
   return dispatch => {

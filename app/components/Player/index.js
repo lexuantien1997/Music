@@ -215,7 +215,7 @@ class Player extends React.PureComponent {
 
   render() {
     const { songData, queue } = this.props;
-    const { name, id } = songData;
+    const { name, id, code } = songData;
     return (
       <div className='player'>
         <audio
@@ -232,7 +232,7 @@ class Player extends React.PureComponent {
         />
         <div className="player-info">
           <Link
-            to={getSongUrl(name, id)}
+            to={getSongUrl(name, id, code)}
             className='ellipsis player-song-title'
             title={songData.name}
           >{songData.name}

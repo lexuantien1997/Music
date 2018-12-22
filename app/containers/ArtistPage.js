@@ -13,7 +13,7 @@ class ArtistPage extends Component {
       if (this.props.artistName) {
         this.props.clearArtist();
       }
-
+  // get artist
       this.props.fetchArtist(this.props.params.name);
     }
   }

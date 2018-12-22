@@ -24,14 +24,14 @@ class SongPage extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { routing: { locationBeforeTransitions: currLoc } } = this.props;
     const { routing: { locationBeforeTransitions: nextLoc } } = nextProps;
-    const { id: nextId, name } = nextProps.songData;
+    const { id: nextId, name, code } = nextProps.songData;
 
     if (nextProps.params.id === nextId) {
       return;
     }
 
     if (nextProps.canPushRoute && nextId !== this.props.songData.id) {
-      browserHistory.push(getSongUrl(name, nextId));
+      browserHistory.push(getSongUrl(name, nextId,code));
       return;
     }
 
