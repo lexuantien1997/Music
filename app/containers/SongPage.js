@@ -12,12 +12,12 @@ class SongPage extends React.Component {
   componentDidMount() {
     this.props.showAnalyzer();
 
-    const { name, id } = this.props.params;
+    const { name, id, code } = this.props.params;
     // only fetch new song data when the user enter the url directly into the url bar on the browser
     // or the url params.id is different from the playing song id
 
     if (isEmpty(this.props.songData) || id !== this.props.songData.id) {
-      this.props.fetchSong(name, id);
+      this.props.fetchSong(name,id, code);
     }
   }
 
@@ -42,8 +42,8 @@ class SongPage extends React.Component {
         return;
       }
 
-      const { name, id } = nextProps.params;
-      this.props.fetchSong(name, id);
+      const { name, id, code } = nextProps.params;
+      this.props.fetchSong(name, id, code);
     }
   }
 

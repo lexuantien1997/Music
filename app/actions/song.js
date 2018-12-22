@@ -9,32 +9,33 @@ import {
   finishDownloading,
 } from './ui';
 
-export function fetchSong(name, id) {
+export function fetchSong(name,id, code) {
   return dispatch => {
     dispatch({ type: types.START_FETCHING_SONG });
-
-    axios.get(`/api/media/song?name=${name}&id=${id}`)
-    .then(({ data }) => {
-      data.cover = data.artist.cover;
-      const ids = {
-        songId: data.id,
-        artistId: data.artist.id,
-      };
-      dispatch(fetchSuggestedSongs(ids));
-
-      delete data.artist;
-      dispatch({ type: types.FETCH_SONG_SUCCESS, data });
-      dispatch(togglePushRoute(false));
-      dispatch({ type: types.ADD_SONG_TO_QUEUE,
-        song: { name: data.name, id, artists: data.artists, thumbnail: data.thumbnail },
+    if(code) {
+      axios.get(`/api/media/song?name=${name}&code=${code}`)
+      .then(({ data }) => {
+        data.cover = data.artist.cover;
+        const ids = {
+          songId: data.id,
+          artistId: data.artist.id,
+        };
+        dispatch(fetchSuggestedSongs(ids));
+  
+        delete data.artist;
+        dispatch({ type: types.FETCH_SONG_SUCCESS, data });
+        dispatch(togglePushRoute(false));
+        dispatch({ type: types.ADD_SONG_TO_QUEUE,
+          song: { name: data.name, id, artists: data.artists, thumbnail: data.thumbnail },
+        });
+      })
+      .catch(err => {
+        console.log(err);
+  
+        dispatch({ type: types.FETCH_SONG_FAILURE });
+        browserHistory.push('/notfound/song');
       });
-    })
-    .catch(err => {
-      console.log(err);
-
-      dispatch({ type: types.FETCH_SONG_FAILURE });
-      browserHistory.push('/notfound/song');
-    });
+    }
   };
 }
 

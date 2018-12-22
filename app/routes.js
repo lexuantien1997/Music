@@ -10,7 +10,7 @@ export default (
     {/* home page, fetch data when scroll ,fetch 20 song, top 10 billboard chart at top 100 us/uk */}
     <IndexRoute component={fetchOnScroll(Containers.HomePage)} onEnter={fetchDataForHomePage} />
 
-    <Route path='song/:name/:id' component={Containers.SongPage} />
+    <Route path='song/:name/:id/:code' component={Containers.SongPage} />
 
     <Route path='album/playlist/:title/:id' component={Containers.AlbumPlaylist}/>
 

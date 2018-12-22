@@ -14,15 +14,15 @@ class HomePageContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  const { activeChart } = state.chartState;
-  const { isLoading, tracks } = state.trackState;
-  const { authenticated } = state.auth;
+  const { activeChart } = state.chartState; // current chart id ?
+  const { isLoading, tracks } = state.trackState; // tracks data
+  const { authenticated } = state.auth; // is authentication or not
 
   return {
-    chart: state.chartState[activeChart],
+    chart: state.chartState[activeChart], // chart songs -> fix bug later
     downloadProgress: state.UIState.downloadProgress,
-    isFading: state.UIState.isFading,
-    activeChoiceId: state.trackState.activeId,
+    isFading: state.UIState.isFading, // fading when start fetch data
+    activeChoiceId: state.trackState.activeId, // current top 100 ?
     isLoading,
     tracks,
     authenticated,

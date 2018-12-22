@@ -14,6 +14,7 @@ const Track = (props) => {
     id,
     artists,
     downloadProgress,
+    code
   } = props;
 
   return (
@@ -25,7 +26,7 @@ const Track = (props) => {
       <LazyloadImage src={thumbnail} className='track-thumb image-wrapper' />
       <div className="trackDetail">
         <div className="trackTitle">
-          <Link to={`song/${changeAlias(name)}/${id}`}>{name}</Link>
+          <Link to={`song/${changeAlias(name)}/${id}/${code}`}>{name}</Link>
         </div>
         <LinksByComma
           className="trackArtist"
@@ -43,7 +44,7 @@ const Track = (props) => {
             ? <CircularProgressbar percentage={downloadProgress.percent} />
             : <button className='sc-ir' onClick={() => props.download({
               songName: changeAlias(name),
-              id,
+              id
             })}>
               <i className="ion-android-download" title="download the track" />
             </button>

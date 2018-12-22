@@ -79,8 +79,8 @@ class Player extends React.PureComponent {
       !nextProps.queueIds.includes(this.props.songData.id) &&
       nextProps.queue[0]
       ) {
-      const { name, id } = nextProps.queue[0];
-      this.props.fetchSong(changeAlias(name), id); // changeAlias {func}: escape ut8 character
+      const { name, id, code } = nextProps.queue[0];
+      this.props.fetchSong(changeAlias(name), id, code); // changeAlias {func}: escape ut8 character
       if (/\/song\//.test(window.location.href)) {
         // only redirect if is on the song route
         browserHistory.push(`/song/${changeAlias(name)}/${id}`);
@@ -126,14 +126,14 @@ class Player extends React.PureComponent {
 
     if (!prevOrnextSong) return;
 
-    const { name, alias, id } = prevOrnextSong;
+    const { name, alias, id, code } = prevOrnextSong;
 
     this.props.togglePushRoute(true); // enable .push for browserHistory
 
     if (alias) {
-      this.props.fetchSong(alias, id);
+      this.props.fetchSong(alias, id, code);
     } else {
-      this.props.fetchSong(changeAlias(name), id); // changeAlias {func}: escape ut8 character
+      this.props.fetchSong(changeAlias(name), id, code); // changeAlias {func}: escape ut8 character
     }
   }
 

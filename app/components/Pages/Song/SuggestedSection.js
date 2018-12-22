@@ -9,7 +9,7 @@ const songList = (songList) => {
       <img src={song.thumbnail} alt=""/>
       <div className="suggested-song-info">
         <Link
-          to={`/song/${changeAlias(song.name)}/${song.id}`}
+          to={`/song/${changeAlias(song.name)}/${song.id}/${song.code}`}
           className='suggested-song-name'>{song.name}</Link>
         <LinksByComma
           className="trackArtist"
@@ -27,7 +27,6 @@ const songList = (songList) => {
 function SuggestedSection(props) {
   const list1 = props.songs.slice(0, 10);
   const list2 = props.songs.slice(11);
-
   return (
     <div className="suggested-section">
       <div className="suggested-section-heading">

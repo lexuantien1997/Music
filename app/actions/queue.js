@@ -3,14 +3,14 @@ import { fetchSong } from './song';
 import { removeById, changeAlias, isEmpty } from '../utils/func';
 
 export function addSongToQueue(song) {
-  const { name, id } = song;
+  const { name, id, code } = song;
   return (dispatch, getState) => {
     const queue = getState().queueState.queue;
 
     if (!queue.length) {
       // if the queue doesn't have any songs, fetch this song and play it
 
-      dispatch(fetchSong(name, id));
+      dispatch(fetchSong(name, id, code));
     } else {
       dispatch({ type: types.ADD_SONG_TO_QUEUE, song });
     }
@@ -62,9 +62,9 @@ export function replaceQueue(songs) {
     // play the first song in the queue if there is no song playing
     if (isEmpty(songData)) {
       dispatch({ type: types.REPLACE_QUEUE, ...tweakSongs(songs) });
-      const { alias, id, name } = songs[0];
+      const { alias, id, name, code } = songs[0];
 
-      dispatch(fetchSong(alias || changeAlias(name), id));
+      dispatch(fetchSong(alias || changeAlias(name), id, code));
       // dispatch(fetchSuggestedSongs(id));
     } else {
       dispatch({ type: types.REPLACE_QUEUE, ...tweakSongs(songs) });
