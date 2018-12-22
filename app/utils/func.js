@@ -31,12 +31,12 @@ export function changeAlias(alias) {
   return arrStr.join('').replace(/-+/g, '-');
 }
 
-export function getSongUrl(name, id) {
+export function getSongUrl(name, id, code) {
   if (!/\s+/.test(name)) {
     // if there is no space therefore the name argument is already escaped
-    return `/song/${name}/${id}`;
+    return `/song/${name}/${id}/${code}`;
   }
-  return `/song/${changeAlias(name)}/${id}`;
+  return `/song/${changeAlias(name)}/${id}/${code}`;
 }
 
 export function pageQuery(page) {

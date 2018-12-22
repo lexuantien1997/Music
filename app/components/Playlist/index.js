@@ -17,6 +17,7 @@ const Playlist = (props) => {
             {page ? (((page - 1) * 20) + index + 1) : (index + 1)}
           </span>
           <div className='playlist-track-title ellipsis'>
+          {/* BUG */}
             <Link to={getSongUrl(song[pathEntry] || song.title, song.id)}>{song.title}</Link>
           </div>
           <div className="playlist-track-artist">

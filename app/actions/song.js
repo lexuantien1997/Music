@@ -26,7 +26,7 @@ export function fetchSong(name,id, code) {
         dispatch({ type: types.FETCH_SONG_SUCCESS, data });
         dispatch(togglePushRoute(false));
         dispatch({ type: types.ADD_SONG_TO_QUEUE,
-          song: { name: data.name, id, artists: data.artists, thumbnail: data.thumbnail },
+          song: { name: data.name, id, artists: data.artists, thumbnail: data.thumbnail, code: data.code },
         });
       })
       .catch(err => {

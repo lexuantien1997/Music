@@ -161,6 +161,7 @@ const List = ({ songs, dispatch, playlistTitle }) => {
               <img src={song.thumbnail} />
             </div>
             <div className="playlist-song-title ellipsis">
+            {/* BUG */}
               <Link to={getSongUrl(song.name, song.id)}>{song.name}</Link>
             </div>
             <div className="playlist-song-artists">

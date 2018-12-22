@@ -15,7 +15,7 @@ function SongResult({ songs, clearSearchResult }) {
               <div className='search-li-info search-song'>
                 <div>
                   <Link
-                    to={getSongUrl(song.name, song.id)}
+                    to={getSongUrl(song.name, song.id, song.code)}
                     onClick={() => clearSearchResult()}
                   >{song.name}</Link>
                 </div>

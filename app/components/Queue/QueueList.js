@@ -4,7 +4,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { getSongUrl } from '../../utils/func';
 import LazyloadImage from '../LazyloadImage';
 
-const Li = ({ name, id, thumbnail, alias, artist, artists, removeSongFromQueue }) => {
+const Li = ({ name, id,code, thumbnail, alias, artist, artists, removeSongFromQueue }) => {
   return (
     <li>
       <LazyloadImage
@@ -13,7 +13,7 @@ const Li = ({ name, id, thumbnail, alias, artist, artists, removeSongFromQueue }
       />
       <div className="queue-list-info">
         <div className="queue-track-title ellipsis" title={name}>
-          <Link to={getSongUrl(alias || name, id)}>{name}</Link>
+          <Link to={getSongUrl(alias || name, id, code)}>{name}</Link>
         </div>
         <div className="queue-track-artist ellipsis">
            {artist || (artists && (Array.isArray(artists) ? artists.map(artist => artist.name).join(', ') : artists))}
@@ -28,6 +28,7 @@ const Li = ({ name, id, thumbnail, alias, artist, artists, removeSongFromQueue }
 };
 
 export default function QueueList({ songs, removeSongFromQueue }) {
+  console.log(songs);
   return (
     <ul className="queue-list">
       <ReactCSSTransitionGroup
