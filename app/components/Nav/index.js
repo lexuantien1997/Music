@@ -20,13 +20,14 @@ class Nav extends React.Component {
   }
 
   search(term) {
-    axios.get(`/api/media/search?term=${term}`)
-      .then(({ data }) => {
-        if (this.state.term.length) {
-          this.setState({ searchResult: data });
-        }
-      })
-      .catch(err => { throw err; });
+    // axios.get(`http://localhost:3000/api/media/search?term=${term}`)
+    //   .then(({ data }) => {
+    //     console.log(data);
+    //     if (this.state.term.length) {
+    //       this.setState({ searchResult: data });
+    //     }
+    //   })
+    //   .catch(err => { throw err; });
   }
 
   handleOnChange(e) {
@@ -38,7 +39,7 @@ class Nav extends React.Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    if (this.state.searchResult.result && !nextState.term.length) {
+    if (this.state.searchResult && !nextState.term.length) {
       this.setState({ searchResult: {} });
     }
   }
@@ -56,7 +57,6 @@ class Nav extends React.Component {
 
   render() {
     const { authenticated, user } = this.props.auth;
-
     return (
       <nav>
         <div className="logo">
@@ -74,7 +74,7 @@ class Nav extends React.Component {
               onChange={this.handleOnChange.bind(this)}
             />
           </div>
-          { this.state.searchResult.result &&
+          { this.state.searchResult &&
             <SearchMenu
               searchResult={this.state.searchResult}
               clearSearchResult={this.clearSearchResult.bind(this)}

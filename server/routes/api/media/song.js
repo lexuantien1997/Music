@@ -35,15 +35,24 @@ const lrcParser = require('lrc-parser');
  * code: "Zmjkt..."
  * 
  */
-module.exports = function getSong(req, res, next) {
-  const { code } = req.query;
+module.exports =  function getSong(req, res, next) {
+  const { code, id , name} = req.query;
+  console.log(req.query);
+   
+  // if(code == 'false') {
+  //   let html = await request(`https://mp3.zing.vn/bai-hat/${name}/${id}.html`);
+  //   let newregex = /key=.{33}/g; // get the resouce url
+  //   let newmat = html.toString().match(newregex);
+  //   code = newmat[0].toString().replace("key=","");    
+  // } 
+  
   let type = 'audio';
   // TO DO: use async await when targeting node 8.0
   let origin_url = "https://mp3.zing.vn/xhr/media/"; // get when check network
   // with different code we still get code
   let param_uri = `get-source?type=${type}&key=${code}`;; // get when check network
   let final_uri = origin_url + param_uri;
-  
+
   co(function* () {
     const response = yield request(final_uri);
     const  data  = JSON.parse(response).data;
