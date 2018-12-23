@@ -48,6 +48,8 @@ const getSongs = (name, page, res, next) => {
       //console.log(html);
       let regexDataCode = /data-code="([\s\S]*?)"/g;
       let listDataCode = html.toString().match(regexDataCode);
+      console.log("list data code: " + listDataCode);
+
       //#region get cover and avatar image
       let regexFullBanner = /<div class="full-banner">([\s\S]*?)<\/div>/i
       let fullBanner = html.toString().match(regexFullBanner);
@@ -65,14 +67,19 @@ const getSongs = (name, page, res, next) => {
       
       //#region get number of Page
       let regexListPage = /<div class="pagination">([\s\S]*?)<\/div>/i
-      let listPageStr = html.toString().match(regexListPage)[1].toString().replace('<ul>', "").replace("</ul>", "").trim()
+      let listPageMatch = html.toString().match(regexListPage)
+      if (listPageMatch != null){
+        let listPageStr = listPageMatch[1].toString().replace('<ul>', "").replace("</ul>", "").trim()
       let regexListPageLi = /<li>([\s\S]*?)<\/li>/ig
       let listPageLi = listPageStr.match(regexListPageLi)
       let regexPageNum = /page=([\s\S]*?)"/i
       numberOfPages = listPageLi[listPageLi.length - 1].toString().match(regexPageNum)[1]
       console.log("number of page: " + numberOfPages)
+      }
+      else{
+        console.log("pagination null")
+      }
       //#endregion
-      console.log(listDataCode);
 
       for(let i = 0; i < listDataCode.length; i++){
         await axios.get('https://mp3.zing.vn/xhr/media/get-source?type=audio&key=' + listDataCode[i].toString().replace('data-code="', "").replace("", ""))
