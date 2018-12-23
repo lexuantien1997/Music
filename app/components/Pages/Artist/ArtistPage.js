@@ -7,7 +7,7 @@ import './index.sass';
 
 const ArtistPage = (props) => {
   const { avatar, cover, songs, artistName, pageChunks, pageChunkIndex, download, downloadProgress, authenticated } = props;
-  console.log(props);
+  console.log("artist page",props);
 
   return (
     <div className="artist-page">

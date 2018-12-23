@@ -14,7 +14,7 @@ class ArtistPage extends Component {
         this.props.clearArtist();
       }
   // get artist
-  console.log(this.props.params.name);
+ // console.log(this.props.params.name);
       this.props.fetchArtist(this.props.params.name);
     }
   }

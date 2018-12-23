@@ -5,7 +5,7 @@ import LinksByComma from '../LinksByComma';
 import { getSongUrl, changeAlias } from '../../utils/func';
 import './index.sass';
 import CircularProgressbar from  "react-circular-progressbar";
-
+import { download } from "../../actions/song";
 // props.download({
 //   songName: changeAlias(name),
 //   id
@@ -19,18 +19,20 @@ class Playlist extends React.Component {
 
   constructor(props) {
     super(props);
-    this.downloadSong=this.downloadSong.bind(this);
+    //this.downloadSong=this.downloadSong.bind(this);
   }
 
-  downloadSong(name,id) {
-    console.log("--------------------",this.props.authenticated);
-    if (!this.props.authenticated) 
-      return this.context.router.push('/login');
-    this.props.download({ songName: changeAlias(name), id })
-  }
+  // downloadSong(name,id) {
+  //   console.log("--------------------",name,id);
+  //   // if (!this.props.authenticated) 
+  //   //   return this.context.router.push('/login');
+  //   // else 
+  //   download({ songName: changeAlias(name), id })
+  // }
 
   render() {
-    const { songs, className, pathEntry, downloadProgress, download } = this.props;
+    const { songs, className, pathEntry, downloadProgress, download, authenticated } = this.props;
+    console.log(authenticated);
     const page = this.props.location.query.page;
     return (
       <ul className={`${className} playlist-tracks`}>
@@ -47,7 +49,10 @@ class Playlist extends React.Component {
               {
                 downloadProgress.isDownloading === true && song.id === downloadProgress.id
                 ? <CircularProgressbar percentage={downloadProgress.percent} />
-                : <button className='sc-ir' onClick={()=>this.downloadSong(song.name,song.id)}>
+                : <button className='sc-ir' onClick={()=>{
+                  if (!authenticated.authenticated) return this.context.router.push('/login');
+                  download({ songName: changeAlias(song.name), id:song.id });
+                }}>
                   <i className="ion-android-download" title="download the track" />
                 </button>
               }

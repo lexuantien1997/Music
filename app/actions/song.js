@@ -54,6 +54,9 @@ export function fetchSuggestedSongs({ songId, artistId }) {
 
 export function download({ songName, id, filename }) {
   return dispatch => {
+
+    console.log(songName,id);
+
     dispatch(startDownloading(id)); // dispatch the action for showing loading progress bar
 
     const url = filename ? `${ROOT_URL}/download/song/${songName}/${id}/${filename}` :
