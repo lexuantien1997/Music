@@ -54,6 +54,7 @@ const SongHeader = (props) => {
               artists: songData.artist,
               id: songData.id,
               thumbnail: 'http://zmp3-photo-td.zadn.vn/noimage',
+              code: songData.code
             });
             props.toggleModal();
           }}

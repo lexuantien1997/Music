@@ -19,7 +19,7 @@ const Track = (props) => {
  // console.log(artists);
   return (
     <li>
-      { props.renderDropDown('Track', { id, name, thumbnail, artists }) }
+      { props.renderDropDown('Track', { id, name, thumbnail, artists, code }) }
       <div className="trackPosition">
         {order}
       </div>

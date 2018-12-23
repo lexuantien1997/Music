@@ -26,7 +26,8 @@ class DropDown extends React.Component {
       return redirectTo('/login');
     }
 
-    const { name, artists, toggleModal, thumbnail } = this.props;
+    const { name, artists, toggleModal, thumbnail, code } = this.props;
+    console.log(this.props);
     toggleTrackDropDown(id);
     toggleModal();
     this.props.addSongToStoreTemporarily({
@@ -34,6 +35,7 @@ class DropDown extends React.Component {
       artists,
       id,
       thumbnail,
+      code
     });
   }
 
