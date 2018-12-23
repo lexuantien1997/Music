@@ -32,19 +32,11 @@ export function changeAlias(alias) {
 }
 
 export function getSongUrl(name, id, code) {
-  // if(code) {
   if (!/\s+/.test(name)) {
     // if there is no space therefore the name argument is already escaped
     return `/song/${name}/${id}/${code}`;
   }
   return `/song/${changeAlias(name)}/${id}/${code}`;
-  // } else {
-  //   if (!/\s+/.test(name)) {
-  //     // if there is no space therefore the name argument is already escaped
-  //     return `/song/${name}/${id}`;
-  //   }
-  //   return `/song/${changeAlias(name)}/${id}`;
-  // }
 }
 
 export function pageQuery(page) {

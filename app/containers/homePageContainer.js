@@ -26,6 +26,7 @@ function mapStateToProps(state) {
     isLoading,
     tracks,
     authenticated,
+    activeChart
   };
 }
 

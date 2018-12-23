@@ -8,14 +8,21 @@ import { haveDropDown } from '../../HOC';
 import './index.sass';
 import CircularProgressbar from "react-circular-progressbar";
 const Chart = (props) => {
-  const { chart, download, authenticated } = props;
+  const { chart, download, authenticated, activeChart } = props;
   if (!chart.items) {
     return null;
+  }
+  console.log(chart);
+  var _image = "https://www.billboardmusicawards.com/wp-content/uploads/2016/05/fb_image_final.jpg";
+  if(activeChart == "vpop") {
+    _image = "https://cdn-images.saostar.vn/2017/01/27/1069189/360-vpop-1-1.jpg";
+  } else if(activeChart == 'kpop') {
+    _image = "https://lovingkorean.files.wordpress.com/2014/10/k-pop-now-korean-music-revolution-review.jpg";
   }
 
   return (
     <div className="chart">
-      <WithBackgroundImage className="featured-image" src={chart.items[0].thumbnail} />
+      <WithBackgroundImage className="featured-image" src={_image} />
       <ul className="chart-list">
         {
           chart.items.map((item, index) => {

@@ -3,6 +3,7 @@ const Playlist = require('models/user_playlist');
 
 module.exports = (req, res, next) => {
   const { username, playlistTitle } = req.params;
+  console.log(req.body);
   co(function* () {
     const isSongExisting = yield Playlist.findOne(
       {
@@ -30,7 +31,7 @@ module.exports = (req, res, next) => {
       // upsert add the document to the collection if no result was found
       { safe: true, upsert: true, new: true }
     );
-
+      console.log(JSON.stringify(New));
     return New;
   })
   .then(doc => res.json(doc))

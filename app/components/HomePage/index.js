@@ -17,7 +17,7 @@ class ChartPanel extends React.Component {
   render() {
     // render right chart
     const list = [
-      { alias: 'pop', title: 'Top 10 Billboard' },
+      { alias: 'pop', title: 'Top Billboard' },
       { alias: 'kpop', title: 'K-Pop Chart' },
       { alias: 'vpop', title: 'V-Pop Chart' },
     ];
@@ -53,7 +53,9 @@ const HomePage = (props) =>
         authenticated={props.authenticated} 
         downloadProgress={props.downloadProgress} 
         download={props.download} 
-        chart={props.chart}/>
+        chart={props.chart}
+        activeChart={props.activeChart}
+        />
     </div>
   </div>;
 

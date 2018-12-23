@@ -7,6 +7,7 @@ const SongSchema = new Schema({
   name: { type: String, required: true },
   artists: { type: Schema.Types.Mixed, required: true }, // string or array
   thumbnail: String,
+  code:String,
   url_alias: String,
 }, { _id: false });
 

@@ -61,6 +61,7 @@ export function createPlaylist(title) {
 }
 
 export function addSongToPlaylist(playlistTitle, songObj) {
+  console.log(songObj);
   const { username, access_token } = getUser();
   return dispatch => {
     instance(access_token).put(`/${username}/${playlistTitle}`, songObj)
