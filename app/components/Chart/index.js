@@ -97,7 +97,7 @@ class ChartItem extends React.Component {
             </button>
           </div>
         </div>
-        { renderDropDown('Chart', { name, id, artists, thumbnail }) }
+        { renderDropDown('Chart', { name, id, artists, thumbnail,code }) }
       </li>
     );
   }
@@ -163,7 +163,7 @@ class ChartFirstItem extends React.Component {
             </button>
           </div>
         </div>
-        { renderDropDown('Chart', { name, id, artists, thumbnail }) }
+        { renderDropDown('Chart', { name, id, artists, thumbnail, code }) }
       </li>
     );
   }

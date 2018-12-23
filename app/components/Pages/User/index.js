@@ -162,7 +162,7 @@ const List = ({ songs, dispatch, playlistTitle }) => {
             </div>
             <div className="playlist-song-title ellipsis">
             {/* BUG */}
-              <Link to={getSongUrl(song.name, song.id)}>{song.name}</Link>
+              <Link to={getSongUrl(song.name, song.id, song.code)}>{song.name}</Link>
             </div>
             <div className="playlist-song-artists">
               {
