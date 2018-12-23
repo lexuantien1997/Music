@@ -49,7 +49,11 @@ const HomePage = (props) =>
     {/* render song chart here */}
     <div className='chart-wrapper'>
       <ChartPanel changeActiveChart={props.changeActiveChart} />
-      <Chart chart={props.chart}/>
+      <Chart 
+        authenticated={props.authenticated} 
+        downloadProgress={props.downloadProgress} 
+        download={props.download} 
+        chart={props.chart}/>
     </div>
   </div>;
 

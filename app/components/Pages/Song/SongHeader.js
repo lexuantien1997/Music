@@ -38,6 +38,7 @@ const SongHeader = (props) => {
           onClick={() => download({
             songName: changeAlias(songData.name),
             id: songData.id,
+            code: songData.code
           })}
         ><i className="ion-ios-download-outline"></i></button>
         <button className="sc-ir"

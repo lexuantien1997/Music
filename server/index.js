@@ -13,6 +13,11 @@ const routes = require('./app');
 
 const app = express();
 const server = http.createServer(app);
+
+const cors = require('cors');
+
+app.use(cors());
+
 app.disable('x-powered-by');
 
 database.init();

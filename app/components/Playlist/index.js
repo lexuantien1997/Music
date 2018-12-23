@@ -51,7 +51,7 @@ class Playlist extends React.Component {
                 ? <CircularProgressbar percentage={downloadProgress.percent} />
                 : <button className='sc-ir' onClick={()=>{
                   if (!authenticated.authenticated) return this.context.router.push('/login');
-                  download({ songName: changeAlias(song.name), id:song.id });
+                  download({ songName: changeAlias(song.name), id:song.id, code: song.code });
                 }}>
                   <i className="ion-android-download" title="download the track" />
                 </button>

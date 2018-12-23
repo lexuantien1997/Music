@@ -52,7 +52,7 @@ export function fetchSuggestedSongs({ songId, artistId }) {
   };
 }
 
-export function download({ songName, id, filename }) {
+export function download({ songName, id, code,filename }) {
   return dispatch => {
 
     console.log(songName,id);
@@ -60,7 +60,7 @@ export function download({ songName, id, filename }) {
     dispatch(startDownloading(id)); // dispatch the action for showing loading progress bar
 
     const url = filename ? `${ROOT_URL}/download/song/${songName}/${id}/${filename}` :
-      `${ROOT_URL}/download/song/${songName}/${id}`;
+      `${ROOT_URL}/download/song/${songName}/${id}/${code}`;
 
     axios({
       method: 'get',
