@@ -1,14 +1,15 @@
+
 const PageScraper = require('lib/PageScraper');
 const { request } = require('utils');
 const cheerio = require('cheerio');
+const axios = require('axios');
 
 const rq = (type, name, page) => {
-  console.log(1);
   if (page) {
-    return request(`https://mp3.zing.vn/nghe-si/${name}/${type}?&page=${page}`);
+    return request(`http://mp3.zing.vn/nghe-si/${name}/${type}?&page=${page}`);
   }
 
-  return request(`https://mp3.zing.vn/nghe-si/${name}/${type}`);
+  return request(`http://mp3.zing.vn/nghe-si/${name}/${type}`);
 };
 
 module.exports = function getArtist(req, res, next) {
@@ -34,27 +35,71 @@ module.exports = function getArtist(req, res, next) {
 
 const getSongs = (name, page, res, next) => {
   rq('bai-hat', name, page)
-    .then(html => {
-      // view-source:https://mp3.zing.vn/nghe-si/Olly-Murs/bai-hat
+    .then(async (html) => {
+       // view-source:https://mp3.zing.vn/nghe-si/Olly-Murs/bai-hat
       // query: data-code
       // https://mp3.zing.vn/xhr/media/get-source?type=audio&key=data-code
       //  => mảng data
-      // console.log(html);
-      const parser = new PageScraper(html);
-      parser
-        .extract('src', '.box-info-artist img', 'avatar')
-        .extract('src', '.container > img', 'cover')
-        .extract('text', '.info-summary > h1', 'artistName')
-        .list('.group.fn-song')
-        .setKey('song')
-        .extractAttrs(['href', 'href'], '._trackLink', ['id', 'alias'])
-        .extractAttr('text', '._trackLink', 'title', string => {
-          return string.replace(/\s*-\s*.+/g, '');
-        })
-        .extractAttr('text', '._trackLink span', 'artist_text')
-        .paginate();
-        console.log(parser.get());
-     res.json(parser.get());
+      let listData = [] // mảng data
+      let avatar = ""
+      let cover = ""
+      let artistName = ""
+      let numberOfPages = 1
+      //console.log(html);
+      let regexDataCode = /data-code="([\s\S]*?)"/g;
+      let listDataCode = html.toString().match(regexDataCode);
+
+
+
+      console.log(listDataCode);
+      for(let i = 0; i < listDataCode.length; i++){
+        await axios.get('https://mp3.zing.vn/xhr/media/get-source?type=audio&key=' + listDataCode[i].toString().replace('data-code="', "").replace("", ""))
+        .then(response => {
+            //console.log(response.data.data);
+            if (avatar == ""){
+              avatar = response.data.data.artist.thumbnail
+            }
+            if(cover == ""){
+              cover = response.data.data.artist.cover
+            }
+            if (artistName == ""){
+              artistName = response.data.data.artists_names
+            }
+            let songInfo = {
+              id: response.data.data.id,
+              code: response.data.data.code,
+              alias: response.data.data.link.toString().split('/')[2],
+              title: response.data.data.title,
+              artist_text: response.data.data.artists_names
+            }
+            //console.log(songInfo);
+            listData.push(response.data.data)
+        });
+      }
+      let data = {
+        avatar: avatar,
+        cover: cover,
+        artistName: artistName,
+        numberOfPages: numberOfPages,
+        songs: listData
+      }
+      // console.log(data)
+      //////////////////////////////////
+      // const parser = new PageScraper(html);
+      // parser
+      // .paginate();
+      // // .extract('src', '.box-info-artist img', 'avatar')
+      // //   .extract('src', '.container > img', 'cover')
+      // //   .extract('text', '.info-summary > h1', 'artistName')
+      // //   .list('.group.fn-song')
+      // //   .setKey('song')
+      // //   .extractAttrs(['href', 'href'], '._trackLink', ['id', 'alias'])
+      // //   .extractAttr('text', '._trackLink', 'title', string => {
+      // //     return string.replace(/\s*-\s*.+/g, '');
+      // //   })
+      // //   .extractAttr('text', '._trackLink span', 'artist_text')
+      return res.json(data);
+
     })
     .catch(err => next(err));
 };

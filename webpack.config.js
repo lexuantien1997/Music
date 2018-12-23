@@ -20,6 +20,19 @@ module.exports = {
     filename: 'js/[name].js',
     publicPath: '/',
   },
+  devServer: {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+    stats: 'errors-only',
+    hot: true,
+    inline: true,
+    historyApiFallback: true,
+    port: 8000,
+    proxy: {
+      '/api': 'http://localhost:3000',
+    },
+  },
   resolve: {
     extensions: [
       '.js', '.sass', '.json',

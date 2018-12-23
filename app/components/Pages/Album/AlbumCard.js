@@ -14,6 +14,7 @@ const AlbumCard = (props) => (
         <Link to={`/album/playlist/${props.alias}/${props.id}`}>{props.title}</Link>
       </div>
       <div className="album-artists">
+      {/* BUG */}
         <LinksByComma
           data={props.artists}
           titleEntry="name"

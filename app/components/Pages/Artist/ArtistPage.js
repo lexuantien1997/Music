@@ -6,7 +6,8 @@ import LazyloadImage from '../../LazyloadImage';
 import './index.sass';
 
 const ArtistPage = (props) => {
-  const { avatar, cover, songs, artistName, pageChunks, pageChunkIndex } = props;
+  const { avatar, cover, songs, artistName, pageChunks, pageChunkIndex, download, downloadProgress, authenticated } = props;
+  console.log(props);
 
   return (
     <div className="artist-page">
@@ -21,9 +22,8 @@ const ArtistPage = (props) => {
       </WithBackgroundImage>
       <button onClick={() => props.replaceQueue(songs)} className="sc-ir" title="play">
         <img src="/svg/play-button-inside-a-circle.svg" className="circle-play-icon"/>
-      </button>
-
-      <Playlist className='artist-playlist' songs={songs} pathEntry="alias" />
+      </button>        
+      <Playlist className='artist-playlist' authenticated={authenticated} downloadProgress={downloadProgress} download={download} songs={songs} pathEntry="alias" />
       <Pagination
         pageChunks={pageChunks}
         pageChunkIndex={pageChunkIndex}

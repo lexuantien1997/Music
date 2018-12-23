@@ -16,7 +16,7 @@ const Track = (props) => {
     downloadProgress,
     code
   } = props;
-
+ // console.log(artists);
   return (
     <li>
       { props.renderDropDown('Track', { id, name, thumbnail, artists }) }

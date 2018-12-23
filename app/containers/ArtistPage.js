@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchArtist, clearArtist, changePageChunkIndex } from '../actions/artist';
 import { replaceQueue } from '../actions/queue';
-import { fetchSong, fetchSuggestedSongs } from '../actions/song';
+import { fetchSong, fetchSuggestedSongs, download } from '../actions/song';
 import { Pages } from '../components';
 
 class ArtistPage extends Component {
@@ -14,11 +14,13 @@ class ArtistPage extends Component {
         this.props.clearArtist();
       }
   // get artist
+  console.log(this.props.params.name);
       this.props.fetchArtist(this.props.params.name);
     }
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(this.props.params.name);
     if (nextProps.params.name !== this.props.params.name) {
       this.props.clearArtist();
       this.props.fetchArtist(nextProps.params.name);
@@ -58,6 +60,8 @@ function mapStateToProps(state) {
     pageChunks,
     pageChunkIndex,
     queueIds: state.queueState.ids,
+    downloadProgress: state.UIState.downloadProgress,
+    authenticated: state.auth
   };
 }
 
@@ -68,4 +72,5 @@ export default connect(mapStateToProps,
     replaceQueue,
     fetchSong,
     fetchSuggestedSongs,
+    download
   })(ArtistPage);
