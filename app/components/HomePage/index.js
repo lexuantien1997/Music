@@ -11,6 +11,7 @@ class ChartPanel extends React.Component {
   handleOnClick(alias) {
     this.props.changeActiveChart(alias);
     this.setState({ activeChart: alias });
+    console.log(alias)
   }
 
   render() {
