@@ -2,6 +2,8 @@ import React from 'react';
 import Playlist from '../../Playlist';
 import { Karaoke } from '../../../containers';
 import { isEmpty } from '../../../utils/func';
+import {connect} from "react-redux";
+import { download } from "../../../actions/song";
 import './album_playlist.sass';
 
 class AlbumPlaylist extends React.Component {
@@ -17,7 +19,8 @@ class AlbumPlaylist extends React.Component {
   }
 
   render() {
-    const { playlist, replaceQueue, isPlaying } = this.props;
+    const { playlist, replaceQueue, isPlaying,downloadProgress, download, authenticated } = this.props;
+    console.log(playlist);
     const { showArtistInfo } = this.state;
     if (isEmpty(playlist)) return null;
 
@@ -32,10 +35,10 @@ class AlbumPlaylist extends React.Component {
               {playlist.album_title}
             </div>
             <div className="ap-artist">{playlist.artist}</div>
-            <div className="ap-releaseY"><span>Release:</span> {playlist.release_year}</div>
-            <div>
+            {/* <div className="ap-releaseY"><span>Release:</span> {playlist.release_year}</div> */}
+            {/* <div>
               Genres: {playlist.genres.join(', ')}
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="album-playlist-content">
@@ -51,7 +54,7 @@ class AlbumPlaylist extends React.Component {
             </button>
           </div>
 
-          <Playlist songs={playlist.songs} className='ap' pathEntry="alias" />
+          <Playlist downloadProgress={downloadProgress} download={download} authenticated={authenticated} songs={playlist.songs} className='ap' pathEntry="alias" />
 
           <div className='album-playlist-artist-info'>
             <div className="album-laylist-artist-thumb image-wrapper">
@@ -77,4 +80,17 @@ class AlbumPlaylist extends React.Component {
   }
 }
 
-export default AlbumPlaylist;
+function mapStateToProps(state) {
+  const { authenticated } = state.auth; // is authentication or not
+
+  return {
+    downloadProgress: state.UIState.downloadProgress,
+    authenticated,
+  };
+}
+
+export default connect(mapStateToProps,
+  {
+    download,
+  })(AlbumPlaylist);
+

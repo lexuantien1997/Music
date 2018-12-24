@@ -89,7 +89,7 @@ class ChartItem extends React.Component {
                 downloadProgress.isDownloading === true && id === downloadProgress.id
                 ? <CircularProgressbar percentage={downloadProgress.percent} />
                 : <button className='sc-ir' onClick={()=>{
-                  if (!authenticated.authenticated) return this.context.router.push('/login');
+                  if (!authenticated) return this.context.router.push('/login');
                   download({ songName: changeAlias(name), id, code });
                 }}>
                   <i className="ion-android-download" title="download the track" />
@@ -155,7 +155,7 @@ class ChartFirstItem extends React.Component {
                 downloadProgress.isDownloading === true && id === downloadProgress.id
                 ? <CircularProgressbar percentage={downloadProgress.percent} />
                 : <button className='sc-ir' onClick={()=>{
-                  if (!authenticated.authenticated) return this.context.router.push('/login');
+                  if (!authenticated) return this.context.router.push('/login');
                   download({ songName: changeAlias(name), id, code });
                 }}>
                   <i className="ion-android-download" title="download the track" />

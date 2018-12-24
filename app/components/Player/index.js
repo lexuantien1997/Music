@@ -29,7 +29,6 @@ class Player extends React.PureComponent {
     this.audio.addEventListener('play', this.onPlay.bind(this));
     this.audio.addEventListener('pause', this.onPause.bind(this));
     this.audio.addEventListener('ended', this.onEnded.bind(this));
-
     // initialize the audio analyzer
     initAnalyzer(this.audio);
   }
